@@ -1,0 +1,4 @@
+MVC =
+Model (Logika ke database) : select, update, delete
+View (HTML,css,jquery,bootstrap, javascript) :
+Controller (mengarahkan) 
