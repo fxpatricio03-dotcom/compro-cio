@@ -25,3 +25,10 @@ Route::post('tambah-action', [\App\Http\Controllers\BelajarController::class, 't
 Route::post('kurang-action', [\App\Http\Controllers\BelajarController::class, 'kurangAction'])->name('kurang-action');
 Route::post('kali-action', [\App\Http\Controllers\BelajarController::class, 'kaliAction'])->name('kali-action');
 Route::post('bagi-action', [\App\Http\Controllers\BelajarController::class, 'bagiAction'])->name('bagi-action');
+
+//blog
+Route::prefix('admin')->group(function (){
+    Route::resource('dashboard', \App\Http\Controllers\ADMIN\DashboardController::class);
+    Route::resource('user', \App\Http\Controllers\ADMIN\UserController::class);
+    Route::resource('blog', \App\Http\Controllers\ADMIN\BlogController::class);
+});

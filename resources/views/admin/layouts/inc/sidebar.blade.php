@@ -135,23 +135,23 @@
             </li>
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
-                <div data-i18n="Authentications">Authentications</div>
+                <i class="menu-icon tf-icons bx bx-book"></i>
+                <div data-i18n="Authentications">Blog</div>
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="auth-login-basic.html" class="menu-link" target="_blank">
-                    <div data-i18n="Basic">Login</div>
+                  <a href="{{route('blog.index')}}" class="menu-link" ">
+                    <div data-i18n="Basic">All Blog</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="auth-register-basic.html" class="menu-link" target="_blank">
-                    <div data-i18n="Basic">Register</div>
+                  <a href="{{ route('blog.create') }}" class="menu-link" ">
+                    <div data-i18n="Basic">Create Blog</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="auth-forgot-password-basic.html" class="menu-link" target="_blank">
-                    <div data-i18n="Basic">Forgot Password</div>
+                  <a href="auth-forgot-password-basic.html" class="menu-link" ">
+                    <div data-i18n="Basic">All Categories</div>
                   </a>
                 </li>
               </ul>
