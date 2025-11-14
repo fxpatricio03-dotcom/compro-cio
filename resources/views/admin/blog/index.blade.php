@@ -11,11 +11,12 @@
             <table class="table table-bordered">
                 <thead class="bg-primary">
                     <tr>
-                        <th class="text-white">No</th>
-                        <th calass="text-white">Category</th>
-                        <th class="text-white">Title</th>
-                        <th class="text-white">Content</th>
-                        <th class="text-white">Action</th>
+                        <th >No</th>
+                        <th >Photo</th>
+                        <th >Category</th>
+                        <th >Title</th>
+                        <th >Content</th>
+                        <th >Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -23,6 +24,9 @@
 
                     <tr>
                         <td>{{$key + 1}}</td>
+                        <td>
+                            <img src="{{ asset('storage/' . $data->photo) }}" alt="{{$data->title}}">
+                            </td>
                         <td>{{$data->category->name}}</td>
                         <td>{{$data->title}}</td>
                         <td>{{$data->content}}</td>

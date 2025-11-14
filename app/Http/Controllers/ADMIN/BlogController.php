@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Blog;
 use App\Models\Categories;
-Use Alert;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
+use RealRashid\SweetAlert\Facades\Alert;
 
 
 class BlogController extends Controller
@@ -38,12 +40,24 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
-        Blog::create([
+        $data = [
+        
             'category_id' => $request->category_id,
             'title' => $request->title,
             'slug' => Str::slug($request->title),
             'content' => $request->content,
-        ]);
+            'status' => $request->status,
+            'writter' => auth()->user->name,
+        ];
+        
+        if($request->hasFile('photo')){
+            $photo = $request->file('photo')->store('blog', 'public');
+            $data['photo'] = $photo;
+            //kalo pake storeAs langsung ke filenya didalem folder
+
+            //$photo = $request->file('photo')->storeAs('blog', 'public');
+        }
+        Blog::create($data);
         Alert::success('Success', 'Create New Blog Success');
         // alert()->info('Info','Password Belum Diisi');
         //toast posisi atas sebelah kanan
@@ -67,8 +81,9 @@ class BlogController extends Controller
     public function edit(string $id)
     {
         $edit = Blog::find($id); //Blog mewakili table
+        $categories = Categories::get();
         $title = "Edit Blog";
-        return view('admin.blog.edit', compact('edit', 'title'));
+        return view('admin.blog.edit', compact('edit', 'title', 'categories'));
     }
 
     /**
@@ -77,12 +92,26 @@ class BlogController extends Controller
     public function update(Request $request, string $id)
     {
         $update = Blog::find($id); //menemukan table dab ambil id-nya
-        $update->category_id = $request->category_id;
-        $update->title = $request->title; //ambil semua data yang mau diupdate
-        $update->slug = Str::slug($request->title);
-        $update->content = $request->content;
 
-        $update->save();
+        $data = [
+        
+            'category_id' => $request->category_id,
+            'title' => $request->title,
+            'slug' => Str::slug($request->title),
+            'content' => $request->content,
+            'status' => $request->status,
+            'writter' => auth()->user->name,
+        ];
+
+        if($request->hasFile('photo')){
+            if($update->photo) {
+            File::delete(public_path('storage/'. $update->photo));
+            }
+            $photo = $request->file('photo')->store('blog', 'public');
+            $data['photo'] = $photo;
+        }
+
+        $update->update($data);
         return redirect()->to('admin/blog');
     }
 
@@ -93,9 +122,9 @@ class BlogController extends Controller
     //kalo make destroy makenya form buat eksekusi delete data, gk make a href, kalo make a href nanti bikin public function lagi
     public function destroy($id)
     {
-        Blog::find($id)->delete();
-        alert()->question('Question','Are you sure?');
-
+        $delete = Blog::find($id)->delete();
+        File::delete(public_path('storage/'. $delete->photo));
+        alert()->success('Success','Delete success');
         return redirect()->to('admin/blog');
     }
 }

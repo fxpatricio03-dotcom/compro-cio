@@ -5,7 +5,8 @@
         <h5>{{ $title ?? '' }}</h5>
     </div>
     <div class="card-body">
-        <form action="{{ route('blog.store') }}" method="post">
+        <!--munculin poto laravel enctype="multipart/form-data-->
+        <form action="{{ route('blog.store') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
                 <label for="" class="form-label">
@@ -26,9 +27,24 @@
                 </div>
                 <div class="mb-3">
                     <label for="" class="form-label">
-                        Content
+                        content
                     </label>
                     <textarea name="content" id="summernote" cols="30" rows="10" class="form-control"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="" class="form-label">
+                        photo
+                    </label>
+                    <input type="file" name="photo">
+                </div>
+                <div class="mb-3">
+                    <label for="" class="form-label">
+                        status
+                    </label>
+                    <select name="status" id="" class="form-control">
+                        <option value="1">Publish</option>
+                        <option value="0">Draft</option>
+                    </select>
                 </div>
                 <div class="mb-3">
                     <button class="btn btn-primary">Save</button>
